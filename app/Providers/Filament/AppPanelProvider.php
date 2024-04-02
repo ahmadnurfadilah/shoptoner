@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\App\Pages\Auth\EditProfile;
+use App\Filament\App\Pages\Auth\Login;
 use App\Filament\App\Pages\RegisterStore;
 use App\Models\Store\Store;
 use Filament\Http\Middleware\Authenticate;
@@ -29,8 +30,8 @@ class AppPanelProvider extends PanelProvider
             ->id('app')
             ->path('')
             ->spa()
-            ->login()
-            // ->passwordReset()
+            ->login(Login::class)
+            ->passwordReset()
             ->profile(EditProfile::class)
             ->darkMode(false)
             ->tenant(Store::class)
@@ -63,6 +64,7 @@ class AppPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->viteTheme('resources/css/filament/app/theme.css');
     }
 }
