@@ -2,9 +2,9 @@
 
 namespace App\Filament\App\Resources;
 
-use App\Filament\App\Resources\ProductCategoryResource\Pages;
-use App\Filament\App\Resources\ProductCategoryResource\RelationManagers;
-use App\Models\Product\ProductCategory;
+use App\Filament\App\Resources\ProductAttributeResource\Pages;
+use App\Filament\App\Resources\ProductAttributeResource\RelationManagers;
+use App\Models\Product\ProductAttribute;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,12 +13,12 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ProductCategoryResource extends Resource
+class ProductAttributeResource extends Resource
 {
-    protected static ?string $model = ProductCategory::class;
+    protected static ?string $model = ProductAttribute::class;
     protected static ?string $recordTitleAttribute = 'name';
     protected static ?string $navigationGroup = 'Product';
-    protected static ?string $navigationLabel = 'Categories';
+    protected static ?string $navigationLabel = 'Attributes';
 
     public static function form(Form $form): Form
     {
@@ -27,28 +27,28 @@ class ProductCategoryResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(50)
-                    ->placeholder('e.g: Pants')
+                    ->placeholder('e.g: Color')
                     ->columnSpanFull(),
                 // Forms\Components\TextInput::make('description')
                 //     ->maxLength(150)
                 //     ->columnSpanFull(),
-                Forms\Components\Toggle::make('is_active')
-                    ->label('Active'),
+                Forms\Components\TagsInput::make('terms')
+                    ->required()
+                    ->helperText('Attribute terms can be assigned to products and variations')
+                    ->placeholder('e.g: Red, Green, Blue')
+                    ->columnSpanFull(),
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
-            ->description('You can handle the product categories for your store in this page.')
+            ->description('Attributes enable you to specify additional information about a product, like its size or color.')
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                // Tables\Columns\TextColumn::make('description')
-                //     ->size('sm')
-                //     ->default('-'),
-                Tables\Columns\ToggleColumn::make('is_active')
-                    ->label('Active'),
+                Tables\Columns\TextColumn::make('terms')
+                    ->searchable(),
             ])
             ->filters([
                 //
@@ -69,7 +69,7 @@ class ProductCategoryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManageProductCategories::route('/'),
+            'index' => Pages\ManageProductAttributes::route('/'),
         ];
     }
 }

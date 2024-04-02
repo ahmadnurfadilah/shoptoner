@@ -2,6 +2,7 @@
 
 namespace App\Models\Store;
 
+use App\Models\Product\ProductAttribute;
 use App\Models\Product\ProductCategory;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
@@ -36,5 +37,10 @@ class Store extends Model
     public function productCategories(): HasMany
     {
         return $this->hasMany(ProductCategory::class, 'store_id');
+    }
+
+    public function productAttributes(): HasMany
+    {
+        return $this->hasMany(ProductAttribute::class, 'store_id');
     }
 }
