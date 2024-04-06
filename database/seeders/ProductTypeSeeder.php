@@ -15,7 +15,7 @@ class ProductTypeSeeder extends Seeder
     {
         $types = [
             ['Digital product', 'A digital product like service, downloadable book, music or video.'],
-            ['Physical product', 'A tangible item that gets delivered to customers.'],
+            ['Physical product (Coming Soon)', 'A tangible item that gets delivered to customers.'],
         ];
 
         foreach ($types as $type) {

@@ -2,6 +2,7 @@
 
 namespace App\Models\Store;
 
+use App\Models\Product\Product;
 use App\Models\Product\ProductAttribute;
 use App\Models\Product\ProductCategory;
 use App\Models\User;
@@ -32,6 +33,11 @@ class Store extends Model
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
+    }
+
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class, 'store_id');
     }
 
     public function productCategories(): HasMany

@@ -66,11 +66,6 @@ class AppPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->viteTheme('resources/css/filament/app/theme.css')
-            ->navigationGroups([
-                NavigationGroup::make()
-                    ->label('Product')
-                    ->icon('heroicon-o-shopping-cart'),
-            ]);;
+            ->viteTheme('resources/css/filament/app/theme.css');
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Models\Product;
 
 use App\Models\Store\Store;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -35,6 +36,11 @@ class ProductCategory extends Model implements Sortable
             ->saveSlugsTo('slug')
             ->doNotGenerateSlugsOnUpdate()
             ->extraScope(fn ($builder) => $builder->where('store_id', $this->store_id));
+    }
+
+    public function scopeActive(Builder $query): void
+    {
+        $query->where('is_active', 1);
     }
 
     public function store(): BelongsTo

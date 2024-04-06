@@ -17,7 +17,7 @@ class ProductCategoryResource extends Resource
 {
     protected static ?string $model = ProductCategory::class;
     protected static ?string $recordTitleAttribute = 'name';
-    protected static ?string $navigationGroup = 'Product';
+    protected static ?string $navigationParentItem = 'Products';
     protected static ?string $navigationLabel = 'Categories';
 
     public static function form(Form $form): Form
