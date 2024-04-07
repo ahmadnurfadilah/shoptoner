@@ -3,6 +3,7 @@
 namespace App\Models\Product;
 
 use App\Models\Store\Store;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -43,6 +44,11 @@ class Product extends Model
             ->saveSlugsTo('slug')
             ->doNotGenerateSlugsOnUpdate()
             ->extraScope(fn ($builder) => $builder->where('store_id', $this->store_id));
+    }
+
+    public function scopePublished(Builder $query): void
+    {
+        $query->where('is_published', 1);
     }
 
     public function store(): BelongsTo
