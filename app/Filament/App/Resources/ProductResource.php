@@ -224,7 +224,7 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('sku')->searchable(),
                 Tables\Columns\TextColumn::make('price')
                     ->numeric()
-                    ->prefix('USD '),
+                    ->suffix(' TON'),
                 Tables\Columns\TextColumn::make('stock')->default('Unlimited'),
             ])
             ->filters([

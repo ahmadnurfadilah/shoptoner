@@ -11,7 +11,7 @@
 </head>
 
 <body class="antialiased" style="background: var(--tg-theme-bg-color)">
-    <main class="px-4 pb-4 flex flex-col min-h-screen items-center justify-center">
+    <main class="px-4 py-2 flex flex-col min-h-screen items-center justify-center">
         <div id="welcome" class="w-full flex items-center justify-center">
             <img src="/assets/img/shopping.webp" alt="Shopping" class="w-2/3 mx-auto" />
             <h1 class="text-center font-bold text-2xl mt-4 mb-8" style="color: var(--tg-theme-text-color)">Connect your wallet<br/>to start shopping</h1>
@@ -25,6 +25,7 @@
     </main>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+    @vite('resources/js/app.js')
     @livewireScripts
     @stack('scripts')
     <script>

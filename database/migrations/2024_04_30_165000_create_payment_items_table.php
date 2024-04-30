@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stores', function (Blueprint $table) {
+        Schema::create('payment_items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->string('name');
-            $table->string('slug')->unique();
-            $table->string('wallet_address')->nullable();
+            $table->foreignId('payment_id')->constrained('payments')->cascadeOnDelete();
+            $table->morphs('payable');
+            $table->integer('quantity')->default(1);
+            $table->float('price', 2);
+            $table->string('note')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stores');
+        Schema::dropIfExists('payment_items');
     }
 };

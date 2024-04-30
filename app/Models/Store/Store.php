@@ -20,6 +20,7 @@ class Store extends Model
     protected $fillable = [
         'user_id',
         'name',
+        'wallet_address',
     ];
 
     public function getSlugOptions(): SlugOptions
