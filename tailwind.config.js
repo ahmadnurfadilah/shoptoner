@@ -6,7 +6,15 @@ export default {
         "./resources/**/*.vue",
     ],
     theme: {
-        extend: {},
+        extend: {
+            colors: {
+                nude: "#EB7D7D",
+                deepblue: "#1D65CE",
+            },
+            fontFamily: {
+                sans: ['"Plus Jakarta Sans"'],
+            },
+        },
     },
     plugins: [],
 };
