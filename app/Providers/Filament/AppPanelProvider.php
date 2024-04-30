@@ -5,6 +5,7 @@ namespace App\Providers\Filament;
 use App\Filament\App\Pages\Auth\EditProfile;
 use App\Filament\App\Pages\Auth\Login;
 use App\Filament\App\Pages\RegisterStore;
+use App\Filament\App\Widgets\StatsOverview;
 use App\Models\Store\Store;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -34,6 +35,7 @@ class AppPanelProvider extends PanelProvider
             ->path('')
             ->spa()
             ->login(Login::class)
+            ->registration()
             ->passwordReset()
             ->profile(EditProfile::class)
             ->darkMode(false)
@@ -52,7 +54,7 @@ class AppPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/App/Widgets'), for: 'App\\Filament\\App\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                StatsOverview::class,
             ])
             ->renderHook(
                 PanelsRenderHook::BODY_END,

@@ -24,6 +24,7 @@ class Settings extends Component implements HasForms
         $this->form->fill([
             'name' => $store->name,
             'slug' => $store->slug,
+            'wallet_address' => $store->wallet_address,
         ]);
     }
 
@@ -37,6 +38,8 @@ class Settings extends Component implements HasForms
                     ->required()
                     ->alphaNum()
                     ->unique('stores', 'slug', Filament::getTenant()),
+                TextInput::make('wallet_address')
+                    ->required(),
             ])
             ->statePath('data');
     }
@@ -46,6 +49,7 @@ class Settings extends Component implements HasForms
         $store = Store::firstOrNew(['id' => Filament::getTenant()->id]);
         $store->name = $this->form->getState()['name'];
         $store->slug = Str::slug($this->form->getState()['slug']);
+        $store->wallet_address = $this->form->getState()['wallet_address'];
         $store->save();
 
         Notification::make()->title('Saved')->success()->send();
