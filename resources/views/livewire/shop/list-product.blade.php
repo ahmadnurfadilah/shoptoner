@@ -58,7 +58,7 @@
     </div>
 
     {{-- Cart --}}
-    <div class="fixed bottom-4 right-4" x-transition:enter="transition ease-out duration-300"
+    {{-- <div class="fixed bottom-4 right-4" x-transition:enter="transition ease-out duration-300"
         x-transition:enter-start="opacity-0 translate-y-full" x-transition:enter-end="opacity-100 translate-y-0"
         x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100 translate-y-0"
         x-transition:leave-end="opacity-0 translate-y-full" x-show="!$store.shopping.showSheet">
@@ -71,47 +71,70 @@
                 <path d="M2.25 2.25a.75.75 0 0 0 0 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 0 0-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 0 0 0-1.5H5.378A2.25 2.25 0 0 1 7.5 15h11.218a.75.75 0 0 0 .674-.421 60.358 60.358 0 0 0 2.96-7.228.75.75 0 0 0-.525-.965A60.864 60.864 0 0 0 5.68 4.509l-.232-.867A1.875 1.875 0 0 0 3.636 2.25H2.25ZM3.75 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM16.5 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z" />
             </svg>
         </button>
-    </div>
+    </div> --}}
 </div>
 
 @script
-<script>
-    Alpine.store('shopping', {
-        showSheet: false,
-        selectedProduct: '',
-        currentGallery: '',
-        user: {},
-        init() {
-            // get user data
-            const initData = window.Telegram.WebApp.initData;
-            const urlParams = new URLSearchParams(initData);
-            this.user = JSON.parse(urlParams.get('user'));
-            $wire.initData(this.user);
+    <script>
+        Alpine.store('shopping', {
+            showSheet: false,
+            selectedProduct: '',
+            currentGallery: '',
+            user: {},
+            init() {
+                // get user data
+                const initData = window.Telegram.WebApp.initData;
+                const urlParams = new URLSearchParams(initData);
+                this.user = JSON.parse(urlParams.get('user'));
+                $wire.initData(this.user);
 
-            // handle onClick mainButton
-            const mainButton = window.Telegram.WebApp.MainButton;
-            mainButton.onClick(() => {
-                if (mainButton.text === 'Add to cart') {
-                    $wire.addToCart(this.selectedProduct.id);
-                    this.showSheet = false;
-                    mainButton.hide();
+                // handle onClick mainButton
+                const mainButton = window.Telegram.WebApp.MainButton;
+                mainButton.onClick(async () => {
+                    if (mainButton.text === 'Buy now') {
+                        const transaction = {
+                            validUntil: Math.floor(Date.now() / 1000) + 60,
+                            messages: [{
+                                    address: "EQBBJBB3HagsujBqVfqeDUPJ0kXjgTPLWPFFffuNXNiJL0aA",
+                                    amount: "20000000",
+                                },
+                                {
+                                    address: "EQDmnxDMhId6v1Ofg_h5KR5coWlFG6e86Ro3pc7Tq4CA0-Jn",
+                                    amount: "60000000",
+                                }
+                            ]
+                        }
+
+                        try {
+                            const result = await tonConnectUI.sendTransaction(transaction);
+                            console.log(result);
+                            // // you can use signed boc to find the transaction
+                            // const someTxData = await myAppExplorerService.getTransaction(result.boc);
+                            // alert('Transaction was sent successfully', someTxData);
+                        } catch (e) {
+                            console.error(e);
+                        }
+
+                        // $wire.addToCart(this.selectedProduct.id);
+                        this.showSheet = false;
+                        mainButton.hide();
+                    }
+                });
+            },
+            toggleSheet() {
+                this.showSheet = !this.showSheet
+                if (!this.showSheet) {
+                    window.Telegram.WebApp.MainButton.isVisible = false;
                 }
-            });
-        },
-        toggleSheet() {
-            this.showSheet = !this.showSheet
-            if (!this.showSheet) {
-                window.Telegram.WebApp.MainButton.isVisible = false;
+            },
+            showProduct(product) {
+                this.showSheet = true;
+                this.selectedProduct = product;
+                this.currentGallery = product.thumbnail;
+                setTimeout(() => {
+                    window.Telegram.WebApp.MainButton.show().setText('Buy now');
+                }, 100);
             }
-        },
-        showProduct(product) {
-            this.showSheet = true;
-            this.selectedProduct = product;
-            this.currentGallery = product.thumbnail;
-            setTimeout(() => {
-                window.Telegram.WebApp.MainButton.show().setText('Add to cart');
-            }, 100);
-        }
-    });
-</script>
+        });
+    </script>
 @endscript

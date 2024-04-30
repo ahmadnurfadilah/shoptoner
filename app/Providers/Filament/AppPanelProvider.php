@@ -38,7 +38,7 @@ class AppPanelProvider extends PanelProvider
             ->tenant(Store::class)
             ->tenantRegistration(RegisterStore::class)
             ->domain('app.' . parse_url(config('app.url'))['host'])
-            ->brandName('Shopshake')
+            ->brandName('Shoptoner')
             ->colors([
                 'primary' => Color::Amber,
             ])

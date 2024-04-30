@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
             'first_name' => 'Ahmad',
             'last_name' => 'Nurfadilah',
             'username' => 'ahmad',
-            'email' => 'ahmad@shopshake.co',
+            'email' => 'ahmad@shoptoner.xyz',
             'password' => bcrypt('12345678'),
             'email_verified_at' => now(),
         ]);
