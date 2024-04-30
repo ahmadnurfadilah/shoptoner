@@ -109,19 +109,22 @@
 
                         $wire.initPay(trxId, this.selectedProduct.id);
 
-                        const body = beginCell()
-                            .storeUint(0, 32)
-                            .storeStringTail("INVOICE:" + trxId)
-                            .endCell();
+                        const bodyOwner = beginCell().storeUint(0, 32).storeStringTail("RECEIPT:" + trxId).endCell();
+                        const bodyStore = beginCell().storeUint(0, 32).storeStringTail("INVOICE:" + trxId).endCell();
 
                         const transaction = {
                             validUntil: Math.floor(Date.now() / 1000) + 60,
                             messages: [
                                 {
-                                    address: this.selectedStore.wallet_address,
+                                    address: '{{ env("OWNER_WALLET_ADDRESS") }}',
                                     // address: "UQD43HTgmvEcHzcCa2svarWPikzb74d5AKPhf1h2PhFfEJdx",
-                                    amount: (parseFloat(this.selectedProduct.price) * 10**9),
-                                    payload: body.toBoc().toString("base64"),
+                                    amount: toNano(parseFloat(this.selectedProduct.price) * (2/100)).toString(),
+                                    payload: bodyOwner.toBoc().toString("base64"),
+                                },
+                                {
+                                    address: this.selectedStore.wallet_address,
+                                    amount: toNano(parseFloat(this.selectedProduct.price) * (98/100)).toString(),
+                                    payload: bodyStore.toBoc().toString("base64"),
                                 },
                             ]
                         }
@@ -130,7 +133,7 @@
                             const result = await tonConnectUI.sendTransaction(transaction);
                             $wire.setBoc(trxId, result.boc);
                         } catch (e) {
-                            alert("Error occured");
+                            console.log("Error", e);
                         }
 
                         // $wire.addToCart(this.selectedProduct.id);
