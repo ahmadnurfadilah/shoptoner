@@ -22,7 +22,7 @@
                 </div>
                 <div class="flex items-center justify-center gap-4 mt-4">
                     <a href="https://app.shoptoner.xyz" class="flex items-center gap-2 px-5 py-2.5 bg-nude text-white rounded-full font-semibold shadow border border-black/10 hover:shadow-xl transition-all">Start Selling</a>
-                    <a href="#" class="flex items-center gap-2 px-5 py-2.5 bg-deepblue text-white rounded-full font-semibold shadow border border-black/10 hover:shadow-xl transition-all">Watch Video</a>
+                    <a href="https://youtu.be/I9yti5SlSiI" target="_blank" class="flex items-center gap-2 px-5 py-2.5 bg-deepblue text-white rounded-full font-semibold shadow border border-black/10 hover:shadow-xl transition-all">Watch Video</a>
                 </div>
             </div>
         </div>
