@@ -37,6 +37,7 @@ class Settings extends Component implements HasForms
                 TextInput::make('slug')
                     ->required()
                     ->alphaNum()
+                    ->prefix('https://shoptoner.xyz/tma/')
                     ->unique('stores', 'slug', Filament::getTenant()),
                 TextInput::make('wallet_address')
                     ->required(),

@@ -21,7 +21,7 @@
                     <p class="text-gray-500">Shoptoner provides a no-code solution for building and managing stores within Telegram, enabling users to effortlessly create their eCommerce presence. Users can set up their store, manage products, and accept payments using TON coin, all seamlessly integrated into Telegram.</p>
                 </div>
                 <div class="flex items-center justify-center gap-4 mt-4">
-                    <a href="https://app.shopttoner.xyz" class="flex items-center gap-2 px-5 py-2.5 bg-nude text-white rounded-full font-semibold shadow border border-black/10 hover:shadow-xl transition-all">Start Selling</a>
+                    <a href="https://app.shoptoner.xyz" class="flex items-center gap-2 px-5 py-2.5 bg-nude text-white rounded-full font-semibold shadow border border-black/10 hover:shadow-xl transition-all">Start Selling</a>
                     <a href="#" class="flex items-center gap-2 px-5 py-2.5 bg-deepblue text-white rounded-full font-semibold shadow border border-black/10 hover:shadow-xl transition-all">Watch Video</a>
                 </div>
             </div>
