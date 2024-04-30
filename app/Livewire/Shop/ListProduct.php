@@ -5,6 +5,7 @@ namespace App\Livewire\Shop;
 use App\Models\Payment\Payment;
 use App\Models\Payment\PaymentItem;
 use App\Models\Product\Product;
+use App\Models\Product\ProductUser;
 use App\Models\User;
 use Darryldecode\Cart\Facades\CartFacade;
 use Livewire\Component;
@@ -13,6 +14,7 @@ class ListProduct extends Component
 {
     public $user;
     public $products;
+    public $ownedProducts;
     public $carts;
 
     public function mount($store)
@@ -29,7 +31,8 @@ class ListProduct extends Component
         $user->save();
 
         $this->user = $user;
-        $this->carts = CartFacade::session($user->id)->getContent();
+        // $this->carts = CartFacade::session($user->id)->getContent();
+        $this->ownedProducts = ProductUser::where('user_id', $user->id)->get();
     }
 
     public function initPay($trxId, $selectedProductId)

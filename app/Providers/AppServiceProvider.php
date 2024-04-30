@@ -32,6 +32,7 @@ class AppServiceProvider extends ServiceProvider
             'product' => 'App\Models\Product\Product',
             'payment' => 'App\Models\Payment\Payment',
             'payment-item' => 'App\Models\Payment\PaymentItem',
+            'product-user' => 'App\Models\Product\ProductUser',
         ]);
     }
 }

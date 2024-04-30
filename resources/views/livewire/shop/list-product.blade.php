@@ -69,6 +69,64 @@
         <p class="text-sm opacity-80" x-html="$store.shopping.selectedProduct.description"></p>
     </div>
 
+    {{-- Owned Products --}}
+    <div class="fixed z-50 inset-0 bg-black/80" x-show="$store.shopping.showSheetProduct"
+        x-on:click="$store.shopping.toggleSheetProduct()" x-transition:enter="transition ease-out duration-100 delay-100"
+        x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"></div>
+    <div class="fixed z-50 bottom-0 inset-x-0 h-[90%] rounded-t-2xl p-4"
+        style="background: var(--tg-theme-bg-color); color: var(--tg-theme-text-color)"
+        x-transition:enter="transition ease-out duration-300 delay-100"
+        x-transition:enter-start="opacity-0 translate-y-full" x-transition:enter-end="opacity-100 translate-y-0"
+        x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100 translate-y-0"
+        x-transition:leave-end="opacity-0 translate-y-full" x-show="$store.shopping.showSheetProduct">
+        <button class="absolute -top-8 right-4 w-6 h-6 rounded-full flex items-center justify-center" style="background: var(--tg-theme-destructive-text-color)" x-on:click="$store.shopping.toggleSheetProduct()">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+            </svg>
+        </button>
+
+        <h4 class="font-bold text-xl mb-4">My Owned Products</h4>
+        @if ($ownedProducts)
+            <div class="grid grid-cols-3 gap-4">
+                @foreach ($ownedProducts as $op)
+                    <div>
+                        <div class="relative">
+                            <img src="{{ config('app.cdn_url') }}/{{ $op->product->thumbnail }}" alt={{ $op->product->name }} class="w-full aspect-square object-cover object-center rounded-lg" />
+                            <div class="absolute bottom-1 right-1 size-8 font-medium rounded-full bg-black/75 text-xs flex items-center justify-center" style="color: var(--tg-theme-text-color)">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="text-sm font-medium mt-1 line-clamp-1" style="color: var(--tg-theme-text-color)">
+                            {{ $op->product->name }}
+                        </p>
+                    </div>
+                @endforeach
+            </div>
+        @endif
+    </div>
+
+    {{-- Owned Digital Products --}}
+    <div class="fixed bottom-4 right-4" x-on:click="$store.shopping.toggleSheetProduct()"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0 translate-y-full" x-transition:enter-end="opacity-100 translate-y-0"
+        x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100 translate-y-0"
+        x-transition:leave-end="opacity-0 translate-y-full" x-show="!$store.shopping.showSheet"
+        x-on:click="">
+        <div class="bg-red-500 absolute rounded-full -top-1 -right-1 size-5 flex items-center justify-center text-xs font-bold" style="background: var(--tg-theme-destructive-text-color); color: var(--tg-theme-button-text-color)">
+            {{ count($ownedProducts ?? []) }}
+        </div>
+        <button class="size-12 rounded-full shadow-xl flex items-center justify-center"
+            style="background: var(--tg-theme-button-color); color: var(--tg-theme-button-text-color)">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m9 13.5 3 3m0 0 3-3m-3 3v-6m1.06-4.19-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" />
+            </svg>
+        </button>
+    </div>
+
     {{-- Cart --}}
     {{-- <div class="fixed bottom-4 right-4" x-transition:enter="transition ease-out duration-300"
         x-transition:enter-start="opacity-0 translate-y-full" x-transition:enter-end="opacity-100 translate-y-0"
@@ -90,6 +148,7 @@
     <script>
         Alpine.store('shopping', {
             showSheet: false,
+            showSheetProoduct: false,
             selectedProduct: '',
             selectedStore: '',
             currentGallery: '',
@@ -145,6 +204,12 @@
             toggleSheet() {
                 this.showSheet = !this.showSheet
                 if (!this.showSheet) {
+                    window.Telegram.WebApp.MainButton.isVisible = false;
+                }
+            },
+            toggleSheetProduct() {
+                this.showSheetProduct = !this.showSheetProduct
+                if (!this.showSheetProduct) {
                     window.Telegram.WebApp.MainButton.isVisible = false;
                 }
             },
