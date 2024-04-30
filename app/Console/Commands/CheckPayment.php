@@ -36,7 +36,7 @@ class CheckPayment extends Command
             foreach ($payment->items as $item) {
                 $response = Http::withHeaders([
                     'accept' => 'application/json',
-                ])->get("https://testnet.toncenter.com/api/v3/transactions?account={$item->payable->store->wallet_address}&limit=128&offset=0&sort=desc");
+                ])->get((config('app.env') === 'production' ? "https://toncenter.com" : "https://testnet.toncenter.com") . "/api/v3/transactions?account={$item->payable->store->wallet_address}&limit=128&offset=0&sort=desc");
 
                 if ($response->successful()) {
                     $trxs = $response->json('transactions');
