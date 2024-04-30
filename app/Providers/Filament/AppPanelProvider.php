@@ -4,6 +4,7 @@ namespace App\Providers\Filament;
 
 use App\Filament\App\Pages\Auth\EditProfile;
 use App\Filament\App\Pages\Auth\Login;
+use App\Filament\App\Pages\Auth\Register;
 use App\Filament\App\Pages\RegisterStore;
 use App\Filament\App\Widgets\StatsOverview;
 use App\Models\Store\Store;
@@ -35,7 +36,7 @@ class AppPanelProvider extends PanelProvider
             ->path('')
             ->spa()
             ->login(Login::class)
-            ->registration()
+            ->registration(Register::class)
             ->passwordReset()
             ->profile(EditProfile::class)
             ->darkMode(false)
@@ -44,7 +45,7 @@ class AppPanelProvider extends PanelProvider
             ->domain('app.' . parse_url(config('app.url'))['host'])
             ->brandName('Shoptoner')
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => "#E74946",
             ])
             ->discoverResources(in: app_path('Filament/App/Resources'), for: 'App\\Filament\\App\\Resources')
             ->discoverPages(in: app_path('Filament/App/Pages'), for: 'App\\Filament\\App\\Pages')

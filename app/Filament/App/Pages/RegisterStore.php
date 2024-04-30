@@ -25,6 +25,10 @@ class RegisterStore extends RegisterTenant
                 TextInput::make('name')
                     ->label('Store name')
                     ->required(),
+                TextInput::make('wallet_address')
+                    ->label('Wallet address (TON)')
+                    ->hint('to receive payment')
+                    ->required(),
             ]);
     }
 
@@ -33,6 +37,7 @@ class RegisterStore extends RegisterTenant
         $store = Store::create([
             'user_id' => auth()->id(),
             'name' => $data['name'],
+            'wallet_address' => $data['wallet_address'],
         ]);
 
         $store->users()->attach(auth()->user());
