@@ -40,6 +40,7 @@ class ListProduct extends Component
         $product = Product::findOrFail($selectedProductId);
         $pay = Payment::create([
             'trx_id' => $trxId,
+            'store_id' => $product->store_id,
             'user_id' => $this->user->id,
             'amount' => $product->price,
             'total_amount' => $product->price,

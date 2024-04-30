@@ -3,6 +3,7 @@
 namespace App\Models\Payment;
 
 use App\Models\Product\ProductUser;
+use App\Models\Store\Store;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,6 +18,7 @@ class Payment extends Model
 
     protected $fillable = [
         'trx_id',
+        'store_id',
         'user_id',
         'amount',
         'total_amount',
@@ -31,6 +33,11 @@ class Payment extends Model
     protected $casts = [
         'surcharge' => 'array',
     ];
+
+    public function store(): BelongsTo
+    {
+        return $this->belongsTo(Store::class, 'store_id');
+    }
 
     public function user(): BelongsTo
     {
